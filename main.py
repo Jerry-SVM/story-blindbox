@@ -36,9 +36,9 @@ def _get_client() -> AsyncOpenAI:
         )
     return _client
 
-# 项目根目录（backend/ 的上一级，放 index.html 的地方）
-ROOT_DIR = Path(__file__).resolve().parent.parent
-FRONTEND_DIR = ROOT_DIR
+# 项目根目录（兼容本地 backend/ 和 Render 根目录两种部署）
+_ROOT = Path(__file__).resolve().parent
+FRONTEND_DIR = _ROOT if (_ROOT / "index.html").exists() else _ROOT.parent
 
 app = FastAPI(title="故事盲盒")
 
